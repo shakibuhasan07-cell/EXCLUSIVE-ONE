@@ -1,7 +1,16 @@
 from flask import Flask, request, redirect, url_for, session, render_template_string
+from flask import Response
 
 app = Flask(__name__)
 app.secret_key = "exclusive-one-secret-key"
+
+
+@app.route("/sw.js")
+def service_worker():
+    response = app.send_static_file("sw.js")
+    response.headers["Content-Type"] = "application/javascript"
+    response.headers["Service-Worker-Allowed"] = "/"
+    return response
 
 # =========================================================
 # EXCLUSIVE ONE - PRODUCT DATA
