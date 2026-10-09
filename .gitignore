@@ -1,0 +1,18 @@
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Environment secrets
+.env
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+.venv/
+
+# Local configuration
+instance/

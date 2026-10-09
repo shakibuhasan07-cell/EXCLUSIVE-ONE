@@ -1,0 +1,29 @@
+{% extends "base.html" %}{% block content %}
+<section class="wrap section profilepage">
+  <div class="profile-cover">
+    <div class="profilehead">
+      <div class="profile-avatar-wrap">
+        <div class="avatar profile-avatar">{% if user.avatar %}<img src="{{url_for('static',filename='uploads/'+user.avatar)}}" alt="Profile picture">{% else %}{{user.name[:1]|upper}}{% endif %}</div>
+        <form method="post" action="{{url_for('profile_avatar')}}" enctype="multipart/form-data" id="avatarForm"><input type="hidden" name="_csrf" value="{{csrf}}"><input id="avatarInput" type="file" name="avatar" accept="image/jpeg,image/png,image/webp" hidden><button type="button" class="avatar-camera" onclick="document.getElementById('avatarInput').click()">📷</button></form>
+      </div>
+      <div><span class="eyebrow">EXCLUSIVE MEMBER</span><h1>{{user.name}}</h1><p>Member since {{user.created_at[:10]}} • <strong>{{user.points or 0}} Exclusive Points</strong></p></div>
+    </div>
+  </div>
+  <div class="profilegrid">
+    <div class="panel profile-card">
+      <span class="eyebrow">ACCOUNT SETTINGS</span><h2>Personal information</h2>
+      <form method="post" class="profile-form"><input type="hidden" name="_csrf" value="{{csrf}}">
+        <label><span>Full name</span><div class="editfield"><input name="name" value="{{user.name}}" required><button type="button" onclick="this.previousElementSibling.focus()">Edit</button></div></label>
+        <label><span>Email address</span><div class="editfield"><input name="email" value="{{user.email if '@phone.exclusive-one.local' not in (user.email or '') else ''}}" type="email" placeholder="Add your email"><button type="button" onclick="this.previousElementSibling.focus()">Edit</button></div></label>
+        <label><span>Mobile number</span><div class="editfield"><input name="phone" value="{{user.phone or ''}}" placeholder="01XXXXXXXXX"><button type="button" onclick="this.previousElementSibling.focus()">Edit</button></div></label>
+        <button class="btn save-profile" type="submit">✓ SAVE CHANGES</button>
+      </form>
+    </div>
+    <div class="panel profile-side">
+      <div class="points-card"><span>EXCLUSIVE POINTS</span><strong>{{user.points or 0}}</strong><small>1 point = 1% discount on your next order.</small><a class="btn small" href="{{url_for('rewards')}}">VIEW REWARDS</a></div>
+      <div class="profile-links"><a href="{{url_for('orders')}}">📦 My Orders <span>→</span></a><a href="{{url_for('wishlist')}}">♡ Wishlist <span>→</span></a><a href="{{url_for('forgot')}}">🔐 Change password <span>→</span></a></div>
+    </div>
+  </div>
+</section>
+<script>document.getElementById('avatarInput').addEventListener('change',()=>document.getElementById('avatarForm').submit())</script>
+{% endblock %}

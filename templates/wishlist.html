@@ -1,0 +1,1 @@
+{% extends "base.html" %}{% block content %}<section class="wrap section"><h1>Wishlist</h1><div class="grid">{% for p in products %}{% include "_card.html" %}{% else %}<div class="empty">Your wishlist is empty.</div>{% endfor %}</div></section>{% endblock %}
